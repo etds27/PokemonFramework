@@ -16,6 +16,11 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
             api.EmuClient.DoFrameAdvance();
         }
 
+        public override bool IsPaused()
+        {
+            return api.EmuClient.IsPaused();
+        }
+
         public override void Pause()
         {
             api.EmuClient.Pause();

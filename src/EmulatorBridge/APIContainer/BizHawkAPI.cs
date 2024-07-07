@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace PokemonFramework.EmulatorBridge.APIContainer
 {
+    /// <summary>
+    /// Static class to hold the container of APIs provided from the BizHawk Emulator
+    /// </summary>
     internal class BizHawkAPI
     {
         public static ApiContainer? _APIContainer { get; set; }

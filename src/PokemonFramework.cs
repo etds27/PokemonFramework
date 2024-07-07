@@ -5,6 +5,7 @@ using BizHawk.Common;
 using BizHawk.Common.IOExtensions;
 using PokemonFramework.EmulatorBridge;
 using PokemonFramework.EmulatorBridge.APIContainer;
+using PokemonFramework.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows.Forms;
 namespace PokemonFramework
 {
     [ExternalTool("PokemonFrameworkRunner")]
+    [ExternalToolApplicability.AnyRomLoaded]
     public class PokemonFramework : ToolFormBase, IExternalToolForm
     {
         private ApiContainer? _maybeAPIContainer { get; set; }
@@ -28,7 +30,7 @@ namespace PokemonFramework
             ClientSize = new System.Drawing.Size(400, 400);
             _headerLabel.Text = "Pokemon Framework";
             Controls.Add(_headerLabel);
-
+            Controls.Add(new PokemonFrameworkForm());
 
         }
 
@@ -36,10 +38,6 @@ namespace PokemonFramework
         {
             base.Restart();
             BizHawkAPI.SetAPIContainer(apiContainer: APIContainer);
-
-            IEmulatorInterface emulatorInterface = new BizHawkEmulatorBridge();
-            List<byte> romName = emulatorInterface.Memory.Read(address: 0x134, size: 10, domain: EmulatorBridge.MemoryInterface.MemoryDomain.ROM).ToList();
-            _headerLabel.Text = Encoding.Default.GetString(romName.ToArray());
         }
     }
 

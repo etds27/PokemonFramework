@@ -1,28 +1,20 @@
 ﻿using BizHawk.Client.Common;
 using PokemonFramework.EmulatorBridge.APIContainer;
 using PokemonFramework.EmulatorBridge.EmulatorInterface;
+using PokemonFramework.EmulatorBridge.MemoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonFramework.EmulatorBridge.InputInterface
 {
     public class BizHawkInput : IInputInterface
     {
         private ApiContainer api => BizHawkAPI.API;
-        private BizHawkEmulatorClient _BizHawkEmulator = new();
 
-        public override void ButtonSequence(IReadOnlyList<InputAction> actions, int waitStart = 0, int waitEnd = 0)
-        {
-            _BizHawkEmulator.AdvanceFrames(frames: waitStart);
-            foreach (var action in actions)
-            {
-                PerformInputAction(action: action);
-            }
-            _BizHawkEmulator.AdvanceFrames(frames: waitStart);
-        }
+        internal override IMemoryInterface MemoryInterface => new BizHawkMemory();
+
+        internal override IEmulatorClientInterface EmulatorClientInterface => new BizHawkEmulatorClient();    
 
         public override void PerformInputAction(InputAction action)
         {
@@ -42,7 +34,7 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
                 api.Joypad.Set(buttons: buttonMask);
             }
 
-            _BizHawkEmulator.AdvanceFrames(action.WaitFrames);
+            EmulatorClientInterface.AdvanceFrames(action.WaitFrames);
         }
     }
 }

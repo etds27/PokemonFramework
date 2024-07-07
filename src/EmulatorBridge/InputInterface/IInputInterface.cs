@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using PokemonFramework.EmulatorBridge.EmulatorInterface;
+using PokemonFramework.EmulatorBridge.MemoryInterface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace PokemonFramework.EmulatorBridge.InputInterface
 {
@@ -31,6 +36,10 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
 
     public abstract class IInputInterface
     {
+        internal abstract IMemoryInterface MemoryInterface { get; }
+        internal abstract IEmulatorClientInterface EmulatorClientInterface { get; } 
+
+
         /// <summary>
         /// Perform the specified input defined by the InputAction parameter
         /// </summary>
@@ -57,6 +66,63 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
             PerformInputAction(action: new InputAction(buttons: buttons, duration: duration, waitFrames: waitFrames));
         }
 
-        public abstract void ButtonSequence(IReadOnlyList<InputAction> actions, int waitStart = 0, int waitEnd = 0);
+        /// <summary>
+        /// Perform a sequence of actions
+        /// </summary>
+        /// <param name="actions">List of actions to perform in order</param>
+        /// <param name="waitStart">Frames to wait until the initial sequence starts</param>
+        /// <param name="waitEnd">Frames to wait after the sequence has ended</param>
+        public void InputSequence(IReadOnlyList<InputAction> actions, int waitStart = 0, int waitEnd = 0)
+        {
+            EmulatorClientInterface.AdvanceFrames(frames: waitStart);
+            foreach (var action in actions)
+            {
+                PerformInputAction(action: action);
+            }
+            EmulatorClientInterface.AdvanceFrames(frames: waitStart);
+        }
+
+        /// <summary>
+        /// Perform the action repeatedly until the memory address returns the correct information
+        /// </summary>
+        /// <param name="action">Action to perform repeatedly</param>
+        /// <param name="memoryQuery">Memory query to observe verification data</param>
+        /// <param name="expectedData">Expected data to be in memory query</param>
+        /// <param name="timeout">Total time to wait for memory to change to correct value</param>
+        /// <returns></returns>
+        public bool PressUntil(InputAction action, MemoryQuery memoryQuery, IReadOnlyList<byte> expectedData, int timeout = 5000) {
+            DateTime end = DateTime.Now.AddMilliseconds(timeout);
+            while (DateTime.Now < end)
+            {
+                if (MemoryInterface.Read(memoryQuery) == expectedData)
+                {
+                    return true;
+                }
+                PerformInputAction(action);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Perform the action repeatedly until the values at the memory address have changed
+        /// </summary>
+        /// <param name="action">Action to perform repeatedly</param>
+        /// <param name="memoryQuery">Memory query to observe verification data</param>
+        /// <param name="timeout">Total time to wait for memory to change to correct value</param>
+        /// <returns></returns>
+        public bool PressUntilMemoryChanges(InputAction action, MemoryQuery memoryQuery, int timeout = 5000)
+        {
+            DateTime end = DateTime.Now.AddMilliseconds(timeout);
+            byte[] startingData = MemoryInterface.Read(memoryQuery).ToArray();
+            while (DateTime.Now < end)
+            {
+                if (MemoryInterface.Read(memoryQuery) != startingData)
+                {
+                    return true;
+                }
+                PerformInputAction(action);
+            }
+            return false;
+        }
     }
 }

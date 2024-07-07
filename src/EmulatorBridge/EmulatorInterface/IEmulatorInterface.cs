@@ -43,5 +43,11 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
             Thread.Sleep(duration);
             Pause();
         }
+
+        public abstract bool IsPaused();
+        public bool IsRunning()
+        {
+            return !IsPaused();
+        }
     }
 }
