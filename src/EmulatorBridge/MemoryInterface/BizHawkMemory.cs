@@ -11,16 +11,15 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface {
     {
         private ApiContainer api => BizHawkAPI.API;
 
-        public override List<byte> Read(long address, int size, MemoryDomain domain)
+        public override IReadOnlyList<byte> Read(long address, int size, MemoryDomain domain)
         {
             IReadOnlyCollection<byte> memoryRange = api.Memory.ReadByteRange(addr: address, length: size, domain: nameof(domain));
-            // IReadOnlyCollection<byte> memoryRange = new List<byte> { 56, 56, 56};
             return memoryRange.ToList();
         }
 
-        public override byte ReadByte(long address, MemoryDomain domain)
+        public override void Write(long address, IReadOnlyList<byte> data, MemoryDomain domain)
         {
-            return Read(address: address, size: 1, domain: domain)[0];
+            api.Memory.WriteByteRange(addr: address, memoryblock: data, domain: nameof(domain));
         }
     }
 }
