@@ -36,8 +36,10 @@ namespace PokemonFramework
         {
             base.Restart();
             BizHawkAPI.SetAPIContainer(apiContainer: APIContainer);
+
             IEmulatorInterface emulatorInterface = new BizHawkEmulatorBridge();
-            List<byte> romName = emulatorInterface.Memory.Read(address: 0x134, size: 10, domain: EmulatorBridge.MemoryInterface.MemoryDomain.ROM);
+            List<byte> romName = emulatorInterface.Memory.Read(address: 0x134, size: 10, domain: EmulatorBridge.MemoryInterface.MemoryDomain.ROM).ToList();
+            _headerLabel.Text = Encoding.Default.GetString(romName.ToArray());
         }
     }
 

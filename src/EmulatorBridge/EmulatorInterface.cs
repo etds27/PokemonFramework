@@ -1,4 +1,6 @@
-﻿using PokemonFramework.EmulatorBridge.MemoryInterface;
+﻿using PokemonFramework.EmulatorBridge.EmulatorInterface;
+using PokemonFramework.EmulatorBridge.InputInterface;
+using PokemonFramework.EmulatorBridge.MemoryInterface;
 using System;
 
 namespace PokemonFramework.EmulatorBridge
@@ -9,6 +11,16 @@ namespace PokemonFramework.EmulatorBridge
     public interface IEmulatorInterface
     {
         public IMemoryInterface Memory
+        {
+            get;
+        }
+
+        public IInputInterface Input
+        {
+            get;
+        }
+
+        public IEmulatorClientInterface Emulator
         {
             get;
         }
