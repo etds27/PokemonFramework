@@ -34,7 +34,6 @@ namespace PokemonFramework.Forms
             this.Name = "PokemonFrameworkForm";
             this.Size = new System.Drawing.Size(323, 212);
             this.ResumeLayout(false);
-
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
