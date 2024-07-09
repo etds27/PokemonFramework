@@ -1,4 +1,5 @@
 ﻿using PokemonFramework.EmulatorBridge.EmulatorInterface;
+using PokemonFramework.EmulatorBridge.GameInterface;
 using PokemonFramework.EmulatorBridge.InputInterface;
 using PokemonFramework.EmulatorBridge.MemoryInterface;
 using System;
@@ -19,5 +20,8 @@ namespace PokemonFramework.EmulatorBridge
 
         private BizHawkEmulatorClient _clientModule = new();
         public IEmulatorClientInterface Emulator { get => _clientModule; }
+
+        private BizHawkGame _gameModule = new();
+        public IGameInterface Game { get => _gameModule; }
     }
 }
