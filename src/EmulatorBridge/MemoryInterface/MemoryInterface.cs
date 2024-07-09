@@ -25,12 +25,30 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 
 	public abstract class IMemoryInterface
 	{
-		public abstract IReadOnlyList<byte> Read(long address, int size, MemoryDomain domain);
+        /// <summary>
+        /// Reads data from the emulators memory
+        /// </summary>
+		/// <param name="address">Address of the data to read relative to the memory domain</param>
+        /// <param name="size">Number of bytes to read from memory</param>
+		/// <param name="domain">Region of memory to look in for datas</param>
+        /// <returns>Array of bytes from the emulator</returns>
+        public abstract IReadOnlyList<byte> Read(long address, int size, MemoryDomain domain);
+
+		/// <summary>
+		/// Reads a single byte from the emulators memory
+		/// </summary>
+		/// <param name="address">Address of the data to read relative to the memory domain</param>
+		/// <param name="domain">Region of memory to look in for datas</param>
+		/// <returns>Single byte of memory from the emulator</returns>
         public byte ReadByte(long address, MemoryDomain domain)
         {
             return Read(address: address, size: 1, domain: domain)[0];
         }
 
+        /// <summary>
+        /// Reads data from the emulators memory
+        /// <param name="query">Struct containing information required to read memory data</param>
+        /// <returns>Array of bytes from the emulator</returns>
         public IReadOnlyList<byte> Read(MemoryQuery query)
 		{
 			return Read(address: query.Address, size: query.Size, domain: query.Domain);
