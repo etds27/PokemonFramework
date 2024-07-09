@@ -10,15 +10,15 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
 {
     public class BizHawkInput : IInputInterface
     {
-        private ApiContainer api => BizHawkAPI.API;
+        private ApiContainer API => BizHawkAPI.API;
 
         internal override IMemoryInterface MemoryInterface => new BizHawkMemory();
 
-        internal override IEmulatorClientInterface EmulatorClientInterface => new BizHawkEmulatorClient();    
+        internal override IEmulatorClientInterface EmulatorClientInterface => new BizHawkEmulatorClient();
 
         public override void PerformInputAction(InputAction action)
         {
-            Dictionary<string, bool> buttonMask = new Dictionary<string, bool>();
+            Dictionary<string, bool> buttonMask = [];
             foreach (Button button in Enum.GetValues(typeof(Button))) {
                 if (action.Buttons.Any(b => b == button))
                 {
@@ -31,7 +31,7 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
 
             for (int i = 0; i < action.Duration; i++)
             {
-                api.Joypad.Set(buttons: buttonMask);
+                API.Joypad.Set(buttons: buttonMask);
             }
 
             EmulatorClientInterface.AdvanceFrames(action.WaitFrames);

@@ -24,7 +24,7 @@ namespace PokemonFramework
         private ApiContainer APIContainer => _maybeAPIContainer!;
 
         protected override string WindowTitleStatic => "Pokemon Framework Runner";
-        private Label _headerLabel = new Label() { AutoSize = true };
+        private Label _headerLabel = new() { AutoSize = true };
         public PokemonFramework()
         {
             ClientSize = new System.Drawing.Size(400, 400);

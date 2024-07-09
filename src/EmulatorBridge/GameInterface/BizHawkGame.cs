@@ -11,16 +11,16 @@ namespace PokemonFramework.EmulatorBridge.GameInterface
 {
     public class BizHawkGame : IGameInterface
     {
-        private ApiContainer api => BizHawkAPI.API;
+        private ApiContainer API => BizHawkAPI.API;
 
         public override string GetRomName()
         {
-            return api.Emulation.GetGameInfo()!.Name;
+            return API.Emulation.GetGameInfo()!.Name;
         }
 
         public override string GetRomHash()
         {
-            return api.Emulation.GetGameInfo()!.Hash;
+            return API.Emulation.GetGameInfo()!.Hash;
         }
     }
 }

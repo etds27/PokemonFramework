@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PokemonFramework.Framework.Game.Gen2
 {
-    internal class PokemonCrystal : IGame
+    internal class PokemonBlue : IGame
     {
         public override string Name => "Pokemon Crystal";
-        public override string RomID => "";
+        public override string RomHash => "";
     }
 }

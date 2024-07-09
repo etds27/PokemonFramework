@@ -79,7 +79,7 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
             {
                 PerformInputAction(action: action);
             }
-            EmulatorClientInterface.AdvanceFrames(frames: waitStart);
+            EmulatorClientInterface.AdvanceFrames(frames: waitEnd);
         }
 
         /// <summary>

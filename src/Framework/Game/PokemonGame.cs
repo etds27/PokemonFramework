@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PokemonFramework.Framework.Game
 {
-    public class PokemonGame
+    public static class PokemonGame
     {
         /// <summary>
         /// Exception to be thrown when the current game is not recognized
