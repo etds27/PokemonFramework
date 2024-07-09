@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PokemonFramework.Framework.Module
 {
-    internal abstract class FrameworkModule
+    public abstract class FrameworkModule
     {
         /// <summary>
         /// Provides API access for all modules in the PokemonFramework

@@ -38,7 +38,7 @@ namespace PokemonFramework.Framework.Game
         /// </summary>
         private static readonly Dictionary<String, IGame> knownGameMap = new()
         {
-            {"F2F52230B536214EF7C9924F483392993E226CFB", CRYSTAL }
+            { "F2F52230B536214EF7C9924F483392993E226CFB", CRYSTAL }
         };
 
         /// <summary>
