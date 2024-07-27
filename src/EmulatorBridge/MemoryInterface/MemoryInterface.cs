@@ -6,6 +6,13 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 {
 	public readonly struct MemoryQuery
 	{
+		public MemoryQuery(long address, int size, MemoryDomain domain)
+		{
+			Address = address;
+			Size = size;
+			Domain = domain;
+		}
+
 		public readonly long Address;
 		public readonly int Size;
 		public readonly MemoryDomain Domain;
@@ -52,6 +59,16 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
         public IReadOnlyList<byte> Read(MemoryQuery query)
 		{
 			return Read(address: query.Address, size: query.Size, domain: query.Domain);
+		}
+
+        /// <summary>
+        /// 
+        /// Reads data from the emulators memory
+        /// <param name="query">Struct containing information required to read memory data</param>
+        /// <returns>Integer from the emulator</returns>
+        public int ReadInt(MemoryQuery query)
+		{
+			return (int)Read(query: query)[0];
 		}
 
 		public abstract void Write(long address, IReadOnlyList<byte> data, MemoryDomain domain);

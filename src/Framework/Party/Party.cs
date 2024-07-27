@@ -1,15 +1,17 @@
-﻿using PokemonFramework.Framework.Game;
+﻿using PokemonFramework.EmulatorBridge.MemoryInterface;
+using PokemonFramework.Framework.Game;
 using PokemonFramework.Framework.Module;
 using PokemonFramework.Framework.Party.PartyObject;
+using PokemonFramework.Framework.Pokemon;
+using PokemonFramework.Framework.Pokemon.PokemonConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static PokemonFramework.Framework.Party.Party;
 
 namespace PokemonFramework.Framework.Party
 {
+    using Constructor = Func<IPartyObject>;
+
     public interface IPartyObject
     {
         /// <summary>
@@ -40,31 +42,30 @@ namespace PokemonFramework.Framework.Party
         public bool NavigateToPokemon(int index);
     }
 
-    public class Party : TopLevelModule<IPartyObject>, IPartyObject
+    public class PartyFactory : TopLevelModule<IPartyObject, object>
     {
-        internal static new Dictionary<IGame, IPartyObject> GameObjectMap = new()
+        internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
         {
-            { PokemonGame.CRYSTAL, new PartyCrystal() }
+            { PokemonGame.CRYSTAL, () => new PartyCrystal() }
         };
 
-        public int GetNumberOfEggsInParty()
+        public IPartyObject CreateObject()
         {
-            return ModelObject.GetNumberOfPokemonInParty();
-        }
-
-        public int GetNumberOfPokemonInParty()
-        {
-            return ModelObject.GetNumberOfPokemonInParty();
-        }
-
-        public long GetPokemonAddress(int index)
-        {
-            return ModelObject.GetPokemonAddress(index: index);
-        }
-
-        public bool NavigateToPokemon(int index)
-        {
-            return ModelObject.NavigateToPokemon(index: index);
+            if ((GameConstructorMap ?? []).TryGetValue(CurrentGame, out Constructor tempObject))
+            {
+                if (tempObject != null)
+                {
+                    return tempObject();
+                }
+                else
+                {
+                    throw new SubModuleNotImplemented();
+                }
+            }
+            else
+            {
+                throw new SubModuleNotFoundException();
+            }
         }
     }
 }

@@ -8,5 +8,14 @@
     <Compile Update="PokemonFramework.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Tests\Party\PartyTestFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Tests\TestUtilities\TestFrame\TestFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Tests\TestUtilities\TestFrame\TestView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

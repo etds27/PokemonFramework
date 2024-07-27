@@ -1,27 +1,39 @@
-﻿using PokemonFramework.Framework.Module;
+﻿using PokemonFramework.EmulatorBridge.MemoryInterface;
+using PokemonFramework.Framework.Module;
+using PokemonFramework.Framework.Pokemon;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonFramework.Framework.Party.PartyObject
 {
     internal class PartyCrystal : FrameworkModule, IPartyObject
     {
+        private readonly PokemonFactory _factory = new();
+
+        private readonly MemoryQuery numPokemonInParty = new (
+            address: 0xDCD7,
+            size: 1,
+            domain: MemoryDomain.WRAM
+        );
+
+        private readonly MemoryQuery startingPokemonAddress = new(
+            address: 0xDCD7 + 0x8,
+            size: 1,
+            domain: MemoryDomain.WRAM
+        );
+
         public int GetNumberOfEggsInParty()
         {
-            throw new NotImplementedException();
+            return API.Memory.ReadInt(query: numPokemonInParty);
         }
 
         public int GetNumberOfPokemonInParty()
         {
-            throw new NotImplementedException();
+            return API.Memory.ReadInt(query: numPokemonInParty);
         }
 
         public long GetPokemonAddress(int index)
         {
-            throw new NotImplementedException();
+            return startingPokemonAddress.Address + (index - 1) * _factory.PokemonSizeInParty;
         }
 
         public bool NavigateToPokemon(int index)

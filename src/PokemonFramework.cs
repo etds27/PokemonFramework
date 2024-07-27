@@ -6,6 +6,7 @@ using BizHawk.Common.IOExtensions;
 using PokemonFramework.EmulatorBridge;
 using PokemonFramework.EmulatorBridge.APIContainer;
 using PokemonFramework.Forms;
+using PokemonFramework.Tests.Party;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace PokemonFramework
             ClientSize = new System.Drawing.Size(400, 400);
             _headerLabel.Text = "Pokemon Framework";
             Controls.Add(_headerLabel);
-            Controls.Add(new PokemonFrameworkForm());
+            Controls.Add(new PartyTestFrame());
 
         }
 
