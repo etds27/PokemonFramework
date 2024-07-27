@@ -21,6 +21,11 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
             return api.EmuClient.IsPaused();
         }
 
+        public override void LoadState(string statePath)
+        {
+            api.EmuClient.LoadState(statePath);
+        }
+
         public override void Pause()
         {
             api.EmuClient.Pause();
@@ -29,6 +34,11 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
         public override void Resume()
         {
             api.EmuClient.Unpause();
+        }
+
+        public override void SaveState(string statePath)
+        {
+            api.EmuClient.SaveState(statePath);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using BizHawk.Client.EmuHawk;
+using PokemonFramework.EmulatorBridge;
 using PokemonFramework.Tests.TestUtilities.Models;
+using PokemonFramework.Tests.TestUtilities.SaveStates;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -14,6 +16,7 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
 {
     public class TestFrame : UserControl
     {
+        internal IEmulatorInterface API = new BizHawkEmulatorBridge();
         private Label testSuiteNameLabel;
         private FlowLayoutPanel testSuiteLayoutPanel;
         internal String _testSuite = "TEST SUITE";

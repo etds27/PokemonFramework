@@ -49,5 +49,8 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
         {
             return !IsPaused();
         }
+
+        public abstract void LoadState(String statePath);
+        public abstract void SaveState(String statePath);
     }
 }
