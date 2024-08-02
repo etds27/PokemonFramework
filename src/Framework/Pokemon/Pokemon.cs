@@ -49,11 +49,15 @@ namespace PokemonFramework.Framework.Pokemon
     {
         internal new static Dictionary<IGame, IPokemonConfig> GameConfigMap = new()
         {
-            { PokemonGame.CRYSTAL, new PokemonCrystalConfig() }
+            { PokemonGame.GOLD, new PokemonConfigGoldSilver() },
+            { PokemonGame.SILVER, new PokemonConfigGoldSilver() },
+            { PokemonGame.CRYSTAL, new PokemonConfigCrystal() }
         };
 
         internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
         {
+            { PokemonGame.GOLD, (MemoryAddress address, PokemonMemoryType memoryType) => new PokemonGoldSilver(address, memoryType) },
+            { PokemonGame.SILVER, (MemoryAddress address, PokemonMemoryType memoryType) => new PokemonGoldSilver(address, memoryType) },
             { PokemonGame.CRYSTAL, (MemoryAddress address, PokemonMemoryType memoryType) => new PokemonCrystal(address, memoryType) }
         };
 

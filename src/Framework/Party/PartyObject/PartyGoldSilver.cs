@@ -7,12 +7,15 @@ using System.Collections.Generic;
 
 namespace PokemonFramework.Framework.Party.PartyObject
 {
-    internal class PartyCrystal : IPartyObject
+    internal class PartyGoldSilver : IPartyObject
     {
+        
+        private readonly IPokemonConfig pokemonConfig = new PokemonConfigGoldSilver();
+
         internal override MemoryQuery NumPokemonInPartyQuery
         {
             get {
-                return new MemoryQuery(address: 0xDCD7, size: 1, domain: MemoryDomain.WRAM);
+                return new MemoryQuery(address: 0xDA22, size: 1, domain: MemoryDomain.WRAM);
             }
         }
 
@@ -20,8 +23,13 @@ namespace PokemonFramework.Framework.Party.PartyObject
         {
             get
             {
-                return 0xDCD7 + 0x8;
+                return 0xDA22 + 0x8;
             }
+        }
+
+        public override int GetNumberOfEggsInParty()
+        {
+            return API.Memory.ReadInt(query: NumPokemonInPartyQuery);
         }
 
         public override bool NavigateToPokemon(int index)
