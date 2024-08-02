@@ -10,7 +10,7 @@ namespace PokemonFramework.Framework.Pokemon.PokemonObject
 {
     public class PokemonCrystal : IPokemonObject
     {
-        public PokemonCrystal(MemoryQuery query, PokemonMemoryType pokemonMemoryType) : base(query, pokemonMemoryType)
+        public PokemonCrystal(MemoryAddress address, PokemonMemoryType pokemonMemoryType) : base(address, pokemonMemoryType)
         {}
 
         public override int PokemonSize => throw new NotImplementedException();

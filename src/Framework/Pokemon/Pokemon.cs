@@ -8,21 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PokemonFramework.Framework.Pokemon.PokemonObject;
-using PokemonFramework.EmulatorBridge.MemoryInterface;
 using PokemonFramework.Framework.Pokemon.PokemonConfig;
 
 namespace PokemonFramework.Framework.Pokemon
 {
-    using Constructor = Func<MemoryQuery, PokemonMemoryType, IPokemonObject>;
+    using Constructor = Func<MemoryAddress, PokemonMemoryType, IPokemonObject>;
 
     public abstract class IPokemonObject : FrameworkObject
     {
-        public MemoryQuery PokemonMemoryQuery;
+        public MemoryAddress PokemonMemoryAddress;
         public PokemonMemoryType PokemonMemoryType;
 
-        public IPokemonObject(MemoryQuery query, PokemonMemoryType pokemonMemoryType)
+        public IPokemonObject(MemoryAddress address, PokemonMemoryType pokemonMemoryType)
         {
-            PokemonMemoryQuery = query;
+            PokemonMemoryAddress = address;
             PokemonMemoryType = pokemonMemoryType;
 
             Update();
@@ -55,16 +54,16 @@ namespace PokemonFramework.Framework.Pokemon
 
         internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
         {
-            { PokemonGame.CRYSTAL, (MemoryQuery query, PokemonMemoryType memoryType) => new PokemonCrystal(query, memoryType) }
+            { PokemonGame.CRYSTAL, (MemoryAddress address, PokemonMemoryType memoryType) => new PokemonCrystal(address, memoryType) }
         };
 
-        public IPokemonObject CreateObject(MemoryQuery query, PokemonMemoryType pokemonMemoryType)
+        public IPokemonObject CreateObject(MemoryAddress address, PokemonMemoryType pokemonMemoryType)
         {
             if ((GameConstructorMap ?? []).TryGetValue(CurrentGame, out Constructor tempObject))
             {
                 if (tempObject != null)
                 {
-                    return tempObject(query, pokemonMemoryType);
+                    return tempObject(address, pokemonMemoryType);
                 }
                 else
                 {

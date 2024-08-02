@@ -12,13 +12,15 @@ namespace PokemonFramework.Tests.TestUtilities.SaveStates
 {
     internal class TestStateLoader
     {
+        private static readonly string testStateDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tests", "TestStates");
+
         private static readonly IGame CurrentGame = PokemonGame.GetCurrentGame();
         public static String TestCheckPartySize
         {
             get
             {
                 Dictionary<IGame, String> stateMap = new() {
-                    {  PokemonGame.CRYSTAL, Path.GetFullPath(@"C:\Users\etds2\Programming\PokemonLua\Tests\States\Crystal\EggTests") }
+                    {  PokemonGame.CRYSTAL, Path.Combine(testStateDirectory, "DayCareMan.State") }
                 };
 
                 return GetPath(stateMap);

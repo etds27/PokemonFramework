@@ -1,10 +1,14 @@
-﻿using System;
+﻿global using MemoryAddress = long;
+
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 
+
 namespace PokemonFramework.EmulatorBridge.MemoryInterface
 {
-	public readonly struct MemoryQuery
+
+    public readonly struct MemoryQuery
 	{
 		public MemoryQuery(long address, int size, MemoryDomain domain)
 		{
@@ -13,7 +17,7 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 			Domain = domain;
 		}
 
-		public readonly long Address;
+		public readonly MemoryAddress Address;
 		public readonly int Size;
 		public readonly MemoryDomain Domain;
 	}
@@ -21,8 +25,8 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 	/// <summary>
 	/// Mapping of Gameboy memory domain names to the starting point in the address space
 	/// </summary>
-	public enum MemoryDomain: long
-	{
+	public enum MemoryDomain: MemoryAddress
+    {
 		ROM = 0x0000,
 		VRAM = 0x8000,
 		WRAM = 0xC000,
@@ -39,7 +43,7 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
         /// <param name="size">Number of bytes to read from memory</param>
 		/// <param name="domain">Region of memory to look in for datas</param>
         /// <returns>Array of bytes from the emulator</returns>
-        public abstract IReadOnlyList<byte> Read(long address, int size, MemoryDomain domain);
+        public abstract IReadOnlyList<byte> Read(MemoryAddress address, int size, MemoryDomain domain);
 
 		/// <summary>
 		/// Reads a single byte from the emulators memory
@@ -47,7 +51,7 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 		/// <param name="address">Address of the data to read relative to the memory domain</param>
 		/// <param name="domain">Region of memory to look in for datas</param>
 		/// <returns>Single byte of memory from the emulator</returns>
-        public byte ReadByte(long address, MemoryDomain domain)
+        public byte ReadByte(MemoryAddress address, MemoryDomain domain)
         {
             return Read(address: address, size: 1, domain: domain)[0];
         }
@@ -71,7 +75,7 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 			return (int)Read(query: query)[0];
 		}
 
-		public abstract void Write(long address, IReadOnlyList<byte> data, MemoryDomain domain);
+		public abstract void Write(MemoryAddress address, IReadOnlyList<byte> data, MemoryDomain domain);
 		public void WriteByte(long address, byte value, MemoryDomain domain)
 		{
 			Write(address: address, data: [value], domain: domain);
@@ -83,9 +87,9 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 		/// <param name="address">Global address within the memory space</param>
 		/// <param name="domain">Domain to adjust the provided address to</param>
 		/// <returns>The memory address within the domain specified</returns>
-		public long GlobalAddressToDomainAddress(long address, MemoryDomain domain)
+		public long GlobalAddressToDomainAddress(MemoryAddress address, MemoryDomain domain)
 		{
-            return address - ((long) domain);
+            return address - ((MemoryAddress) domain);
 		}
 
         /// <summary>
@@ -94,9 +98,9 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
         /// <param name="address">Domain address within the memory space</param>
         /// <param name="domain">Domain to adjust the provided address from</param>
         /// <returns></returns>
-        public long DomainAddressToGlobalAddress(long address, MemoryDomain domain)
+        public long DomainAddressToGlobalAddress(MemoryAddress address, MemoryDomain domain)
 		{
-			return ((long) domain) | address;
+			return ((MemoryAddress) domain) | address;
 		}
 	}
 }

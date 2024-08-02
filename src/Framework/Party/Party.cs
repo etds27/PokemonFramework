@@ -19,21 +19,33 @@ namespace PokemonFramework.Framework.Party
         /// </summary>
         /// <returns>Number of pokemon currently in the player's party</returns>
         public int GetNumberOfPokemonInParty();
+
         /// <summary>
         /// Get the memory address of the pokemon at the specified index in the party
         /// </summary>
         /// <param name="index">Index of the pokemon to get the address for</param>
         /// <returns>Memory address of the pokemon</returns>
         public long GetPokemonAddress(int index);
-        // public Pokemon GetPokemonAtIndex(int index);
-        // public IReadOnlyList<Pokemon> GetPokemonInParty();
-        // public IReadOnlyList<Pokemon> GetEggsInParty();
-        // public IReadOnlyList<Pokemon> GetEggMask();
+
+        /// <summary>
+        /// Get the Pokemon at the specified index in the user's party
+        /// </summary>
+        /// <param name="index">Index of the Pokemon to get</param>
+        /// <returns></returns>
+        public IPokemonObject GetPokemonAtIndex(int index);
+
+        /// <summary>
+        /// Get all of the Pokemon that are currently in the party
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<IPokemonObject> GetPokemonInParty();
+        
         /// <summary>
         /// Get the number of eggs currently in the player's party
         /// </summary>
         /// <returns>=Number of eggs currently in the player's party</returns>
         public int GetNumberOfEggsInParty();
+
         /// <summary>
         /// Open the party menu and open the pokemon's party page
         /// </summary>
