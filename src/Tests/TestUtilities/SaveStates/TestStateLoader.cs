@@ -1,4 +1,4 @@
-﻿using PokemonFramework.Framework.Game;
+﻿using PokemonFramework.Framework.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.IO;

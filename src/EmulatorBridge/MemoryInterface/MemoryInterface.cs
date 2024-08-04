@@ -75,7 +75,18 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
 			return (int)Read(query: query)[0];
 		}
 
-		public abstract void Write(MemoryAddress address, IReadOnlyList<byte> data, MemoryDomain domain);
+
+        /// <summary>
+        /// 
+        /// Reads data from the emulators memory
+        /// <param name="query">Struct containing information required to read memory data</param>
+        /// <returns>Integer from the emulator</returns>
+        public int ReadInt(MemoryAddress address, MemoryDomain domain)
+        {
+            return ReadInt(new MemoryQuery(address: address, size: 1, domain));
+        }
+
+        public abstract void Write(MemoryAddress address, IReadOnlyList<byte> data, MemoryDomain domain);
 		public void WriteByte(long address, byte value, MemoryDomain domain)
 		{
 			Write(address: address, data: [value], domain: domain);
