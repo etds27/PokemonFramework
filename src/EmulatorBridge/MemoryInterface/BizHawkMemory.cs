@@ -1,12 +1,11 @@
-﻿using System;
-using PokemonFramework.EmulatorBridge.MemoryInterface;
-using BizHawk.Client.Common;
+﻿using BizHawk.Client.Common;
 using System.Collections.Generic;
 using System.Linq;
 using PokemonFramework.EmulatorBridge.APIContainer;
 
 
-namespace PokemonFramework.EmulatorBridge.MemoryInterface {
+namespace PokemonFramework.EmulatorBridge.MemoryInterface
+{
     public class BizHawkMemory : IMemoryInterface
     {
         private ApiContainer api => BizHawkAPI.API;

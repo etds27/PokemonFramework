@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PokemonFramework.EmulatorBridge.InputInterface;
+﻿using PokemonFramework.EmulatorBridge.InputInterface;
 using PokemonFramework.EmulatorBridge.MemoryInterface;
-using PokemonFramework.Framework.Models.Bag;
+using System;
+using System.Collections.Generic;
 
 namespace PokemonFramework.Framework.Models.Bag.Object
 {

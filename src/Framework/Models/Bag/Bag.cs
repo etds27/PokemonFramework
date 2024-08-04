@@ -2,7 +2,6 @@
 using PokemonFramework.Framework.Models.Bag.Config;
 using PokemonFramework.Framework.Models.Bag.Object;
 using PokemonFramework.Framework.Models.Game;
-using PokemonFramework.Framework.Models.Item;
 using PokemonFramework.Framework.Models.Module;
 using System;
 using System.Collections.Generic;

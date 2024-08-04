@@ -1,8 +1,5 @@
 ﻿global using MemoryAddress = long;
-
-using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 
 
 namespace PokemonFramework.EmulatorBridge.MemoryInterface

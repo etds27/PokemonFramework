@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PokemonFramework.Framework.Models.Pokemon;
-
-namespace PokemonFramework.Framework.Models.Pokemon.PokemonConfig
+﻿namespace PokemonFramework.Framework.Models.Pokemon.PokemonConfig
 {
     public class PokemonConfigCrystal : IPokemonConfig
     {

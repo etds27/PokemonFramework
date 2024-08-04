@@ -2,7 +2,6 @@
 using PokemonFramework.EmulatorBridge.GameInterface;
 using PokemonFramework.EmulatorBridge.InputInterface;
 using PokemonFramework.EmulatorBridge.MemoryInterface;
-using System;
 
 namespace PokemonFramework.EmulatorBridge
 {

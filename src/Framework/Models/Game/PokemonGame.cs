@@ -1,14 +1,8 @@
-﻿using BizHawk.Client.Common;
-using PokemonFramework.EmulatorBridge;
-using PokemonFramework.EmulatorBridge.APIContainer;
+﻿using PokemonFramework.EmulatorBridge;
 using PokemonFramework.Framework.Models.Game.Gen1;
 using PokemonFramework.Framework.Models.Game.Gen2;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokemonFramework.Framework.Models.Game
 {
