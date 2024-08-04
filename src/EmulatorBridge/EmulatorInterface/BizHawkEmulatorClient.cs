@@ -23,7 +23,10 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
 
         public override void LoadState(string statePath)
         {
+            Serilog.Log.Information("Loading Save State from path: {State}", statePath);
             api.EmuClient.LoadState(statePath);
+            Serilog.Log.Information("Loaded Save State from path: {State}", statePath);
+
         }
 
         public override void Pause()
@@ -38,7 +41,9 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
 
         public override void SaveState(string statePath)
         {
+            Serilog.Log.Information("Saving current state to path: {State}", statePath);
             api.EmuClient.SaveState(statePath);
+            Serilog.Log.Information("Saved current state to path: {State}", statePath);
         }
     }
 }

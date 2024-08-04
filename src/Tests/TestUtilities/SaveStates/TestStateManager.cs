@@ -12,7 +12,7 @@ namespace PokemonFramework.Tests.TestUtilities.SaveStates
 {
     internal class TestStateManager
     {
-        private static readonly string testStateDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tests", "TestStates");
+        private static readonly string testStateDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "src", "Tests", "TestStates");
 
         private static readonly IGame CurrentGame = PokemonGame.GetCurrentGame();
         public static string TestCheckPartySize
@@ -20,7 +20,7 @@ namespace PokemonFramework.Tests.TestUtilities.SaveStates
             get
             {
                 Dictionary<IGame, String> stateMap = new() {
-                    {  PokemonGame.CRYSTAL, Path.Combine(testStateDirectory, "DayCareMan.State") }
+                    {  PokemonGame.CRYSTAL, Path.Combine(testStateDirectory, "DayCareMan") }
                 };
 
                 return GetPath(stateMap);
