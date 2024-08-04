@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace PokemonFramework.Tests.TestUtilities.SaveStates
 {
-    internal class TestStateLoader
+    internal class TestStateManager
     {
         private static readonly string testStateDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tests", "TestStates");
 
         private static readonly IGame CurrentGame = PokemonGame.GetCurrentGame();
-        public static String TestCheckPartySize
+        public static string TestCheckPartySize
         {
             get
             {
@@ -27,7 +27,7 @@ namespace PokemonFramework.Tests.TestUtilities.SaveStates
             }
         }
 
-        private static String GetPath(Dictionary<IGame, String> stateMap)
+        private static string GetPath(Dictionary<IGame, String> stateMap)
         {
             if (stateMap.TryGetValue(CurrentGame, out String path))
             {

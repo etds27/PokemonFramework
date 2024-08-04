@@ -17,7 +17,7 @@ namespace PokemonFramework.Tests.Party
 
         public TestStatus TestCheckPartySize()
         {
-            API.Emulator.LoadState(TestStateLoader.TestCheckPartySize);
+            API.Emulator.LoadState(TestStateManager.TestCheckPartySize);
             Random random = new();
             List<TestStatus> testStatuses = Enum.GetValues(typeof(TestStatus)).Cast<TestStatus>().ToList();
             int index = random.Next(testStatuses.Count);

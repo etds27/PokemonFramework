@@ -7,6 +7,7 @@ using PokemonFramework.EmulatorBridge;
 using PokemonFramework.EmulatorBridge.APIContainer;
 using PokemonFramework.Forms;
 using PokemonFramework.Tests.Party;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,20 @@ namespace PokemonFramework
         private Label _headerLabel = new() { AutoSize = true };
         public PokemonFramework()
         {
+            Serilog.Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("logs\\log.txt")
+                .CreateLogger();
+
+            Serilog.Log.Information("Initializing PokemonFramework");
+
             ClientSize = new System.Drawing.Size(400, 400);
             _headerLabel.Text = "Pokemon Framework";
             Controls.Add(_headerLabel);
             Controls.Add(new PartyTestFrame());
 
+            IEmulatorInterface emulatorInterface = EmulatorFactory.GetEmulator();
         }
 
         public override void Restart()
