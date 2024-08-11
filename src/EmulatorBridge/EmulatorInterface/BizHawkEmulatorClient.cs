@@ -12,6 +12,8 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
             api.EmuClient.DoFrameAdvance();
         }
 
+        public override int GetFrameCount() => api.Emulation.FrameCount();
+
         public override bool IsPaused() => api.EmuClient.IsPaused();
 
         public override void LoadState(string statePath)

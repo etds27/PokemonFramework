@@ -121,16 +121,20 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
 
         }
 
-        private void runTestButton_Click(object sender, EventArgs e)
+        private async void runTestButton_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(RunTest);
-            thread.IsBackground = true;
-            thread.Start();
+            // Task task = new (RunTest);
+            // Thread thread = new (RunTest);
+            // thread.IsBackground = false;
+            // thread.Start();
+            // RunTest();
+            await RunTest();
         }
 
-        private void RunTest()
+        private async Task RunTest()
         {
             runTestButton.Text = "Running...";
+            runTestButton.Update();
             TestStatus executionStatus;
             try
             {

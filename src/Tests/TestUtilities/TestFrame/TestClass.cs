@@ -35,14 +35,28 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
             return Assert(!status, message);
         }
 
+        internal TestStatus AssertEqual<T>(IEquatable<T> equatable1, IEquatable<T> equatable2, string message = "")
+        {
+            string updatedMesage = $"{equatable1} != {equatable2}: {message}";
+            return Assert(equatable1.Equals(equatable2), updatedMesage);
+        }
+
+        internal TestStatus AssertNonEqual<T>(IEquatable<T> equatable1, IEquatable<T> equatable2, string message = "")
+        {
+            string updatedMesage = $"{equatable1} == {equatable2}: {message}";
+            return Assert(!equatable1.Equals(equatable2), updatedMesage);
+        }
+
         internal TestStatus AssertGreaterThan(IComparable comparable1, IComparable comparable2, string message = "")
         {
-            return Assert(comparable1.CompareTo(comparable2) > 0, message);
+            string updatedMesage = $"{comparable1} <= {comparable2}: {message}";
+            return Assert(comparable1.CompareTo(comparable2) > 0, updatedMesage);
         }
 
         internal TestStatus AssertLessThan(IComparable comparable1, IComparable comparable2, string message = "")
         {
-            return Assert(comparable1.CompareTo(comparable2) < 0, message);
+            string updatedMesage = $"{comparable1} >= {comparable2}: {message}";
+            return Assert(comparable1.CompareTo(comparable2) < 0, updatedMesage);
         }
     }
 }

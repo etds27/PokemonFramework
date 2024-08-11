@@ -25,11 +25,7 @@ namespace PokemonFramework.Tests.Menu
             return TestMenuNavigateUp();
         }
 
-        public TestStatus TestFrameAdvance()
-        {
-            API.Emulator.AdvanceFrame();
-            return TestStatus.Success;
-        }
+
     }
 
     public class MenuTestFrame : TestFrame

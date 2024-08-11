@@ -1,4 +1,5 @@
-﻿using PokemonFramework.Tests.Menu;
+﻿using PokemonFramework.Tests.Emulator;
+using PokemonFramework.Tests.Menu;
 using PokemonFramework.Tests.Party;
 using PokemonFramework.Tests.TestUtilities.TestFrame;
 using System;
@@ -16,8 +17,9 @@ namespace PokemonFramework.Tests
         private TabControl TestTabControl = new();
 
         private IReadOnlyList<TestFrame> TestFrames = [
-                new PartyTestFrame(),
-                new MenuTestFrame()
+            new PartyTestFrame(),
+            new MenuTestFrame(),
+            new EmulatorTestFrame(),
         ];
 
         public MainTestControl() {

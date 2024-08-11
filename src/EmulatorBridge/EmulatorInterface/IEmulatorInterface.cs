@@ -5,6 +5,8 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
 {
     public abstract class IEmulatorClientInterface
     {
+        public abstract int GetFrameCount();
+
         public abstract void AdvanceFrame();
 
         public void AdvanceFrames(int frames = 1)
