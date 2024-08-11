@@ -80,13 +80,17 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
             {
                 if (method.Name.StartsWith("Test") && method.GetParameters().Length == 0)
                 {
+                    Action testFunc = (Action)Delegate.CreateDelegate(typeof(Action), TestClass, method);
+
                     TestView testView = new()
                     {
                         testName = method.Name,
-                        testStatus = TestStatus.None
+                        testStatus = TestStatus.None,
+                        TestCallback = testFunc,
+                        SetupCallback = TestClass.TestCaseSetup,
+                        TearDownCallback = TestClass.TestCaseTearDown
                     };
-                    Func<TestStatus> testFunc = (Func<TestStatus>) Delegate.CreateDelegate(typeof(Func<TestStatus>), TestClass, method);
-                    testView.TestCallback = testFunc;
+
                     testSuiteLayoutPanel.Controls.Add(testView);
                 }
             }

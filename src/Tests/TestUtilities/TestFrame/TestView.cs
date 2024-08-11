@@ -1,11 +1,6 @@
 ﻿using PokemonFramework.Tests.TestUtilities.Models;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,8 +22,9 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
                 testNameLabel.Text = _testName;
             }
         }
-
-        public Func<TestStatus> TestCallback;
+        public Action SetupCallback;
+        public Action TestCallback;
+        public Func<TestStatus> TearDownCallback;
 
         private TestStatus _testStatus = TestStatus.None;
         public TestStatus testStatus
@@ -138,7 +134,9 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
             TestStatus executionStatus;
             try
             {
-                executionStatus = TestCallback();
+                SetupCallback();
+                TestCallback();
+                executionStatus = TearDownCallback();
             }
             catch (TestInterruption e)
             {

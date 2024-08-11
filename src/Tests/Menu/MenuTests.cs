@@ -11,18 +11,32 @@ namespace PokemonFramework.Tests.Menu
 {
     internal class MenuTests : TestClass
     {
-        public TestStatus TestMenuNavigateUp()
+        private readonly IMenuObject menu = new MenuFactory().DefaultMenu;
+
+        public void TestMenuNavigateUp()
         {
             API.Emulator.LoadState(TestStateManager.TestBagState);
-            IMenuObject menu = new MenuFactory().DefaultMenu;
             
-            Assert(menu.NavigateMenu(4), "Unable to navigate menu to index 4");
-            return TestStatus.Success;
+            Assert(menu.NavigateMenu(5), "Unable to navigate menu to index 5");
         }
 
-        public TestStatus TestMenuNavigateDown()
+        public void TestMenuNavigateDown()
         {
-            return TestMenuNavigateUp();
+            API.Emulator.LoadState(TestStateManager.TestBagState);
+
+            Assert(menu.NavigateMenu(1), "Unable to navigate menu to index 1");
+        }
+
+        public void TestActiveNavigateUp()
+        {
+            API.Emulator.LoadState(TestStateManager.TestBagState);
+            Assert(menu.ActiveNavigation(5), "Unable to actively navigate to index 5");
+        }
+
+        public void TestActiveNavigateDown()
+        {
+            API.Emulator.LoadState(TestStateManager.TestBagState);
+            Assert(menu.ActiveNavigation(1), "Unable to actively navigate to index 1");
         }
 
 

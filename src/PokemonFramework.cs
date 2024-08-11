@@ -34,9 +34,8 @@ namespace PokemonFramework
             Log.Information("Initializing PokemonFramework");
 
             ClientSize = new System.Drawing.Size(400, 400);
-            MainTestControl mainTestControl = new MainTestControl();
-            mainTestControl.Dock = DockStyle.Fill;
-            Controls.Add(mainTestControl);
+
+            
 
         }
 
@@ -44,6 +43,11 @@ namespace PokemonFramework
         {
             base.Restart();
             BizHawkAPI.SetAPIContainer(apiContainer: APIContainer);
+            MainTestControl mainTestControl = new()
+            {
+                Dock = DockStyle.Fill
+            };
+            Controls.Add(mainTestControl);
         }
     }
 

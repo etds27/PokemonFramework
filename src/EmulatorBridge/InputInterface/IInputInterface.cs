@@ -1,6 +1,7 @@
 ﻿using PokemonFramework.EmulatorBridge.EmulatorInterface;
 using PokemonFramework.EmulatorBridge.MemoryInterface;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,17 +35,39 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
         public readonly int WaitFrames = waitFrames;
     }
 
-    public enum Button
+    public sealed class Button()
     {
-        A,
-        B,
-        DOWN,
-        LEFT,
-        RIGHT,
-        UP,
-        POWER,
-        START,
-        SELECT
+        public readonly string Name = "";
+
+        private Button(string name) : this()
+        {
+            Name = name;
+        }
+
+        public static readonly Button A = new("A");
+        public static readonly Button B = new("B");
+        public static readonly Button DOWN = new("Down");
+        public static readonly Button UP = new("Up");
+        public static readonly Button LEFT = new("Left");
+        public static readonly Button RIGHT = new("Right");
+        public static readonly Button POWER = new("Power");
+        public static readonly Button START = new("Start");
+        public static readonly Button SELECT = new("Select");
+
+        /// <summary>
+        /// To be used to iterate over all allowable buttons
+        /// </summary>
+        public static IReadOnlyCollection<Button> AllButtons = [
+            Button.A, 
+            Button.B, 
+            Button.DOWN, 
+            Button.UP,     
+            Button.LEFT, 
+            Button.RIGHT, 
+            Button.POWER,
+            Button.START, 
+            Button.SELECT
+            ];
     }
 
     public abstract class IInputInterface

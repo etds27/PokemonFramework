@@ -14,19 +14,18 @@ namespace PokemonFramework.Tests.Party
 {
     internal class PartyTests : TestClass
     {
-        public TestStatus TestCheckPartySize()
+        public void TestCheckPartySize()
         {
             API.Emulator.LoadState(TestStateManager.TestCheckPartySize);
             Random random = new();
             List<TestStatus> testStatuses = Enum.GetValues(typeof(TestStatus)).Cast<TestStatus>().ToList();
             int index = random.Next(testStatuses.Count);
             Thread.Sleep(2000);
-            return testStatuses[index];
         }
 
-        public TestStatus TestCheckMaxPartySize()
+        public void TestCheckMaxPartySize()
         {
-            return TestCheckPartySize();
+            TestCheckPartySize();
         }
     }
 

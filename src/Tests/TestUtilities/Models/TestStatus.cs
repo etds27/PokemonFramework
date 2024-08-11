@@ -2,11 +2,11 @@
 {
     public enum TestStatus
     {
-        Success,
-        None,
         Abort,
         Fail,
+        KnownFailure,
         ExpectedFailure,
-        KnownFailure
+        Success,
+        None
     }
 }

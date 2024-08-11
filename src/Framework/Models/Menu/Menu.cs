@@ -96,7 +96,6 @@ namespace PokemonFramework.Framework.Models.Menu
         /// Navigate to a specific location within the menu given the query for the cursor position
         /// </summary>
         /// <param name="endLocation">Ending location of the cursor within the menu</param>
-        /// <param name="actionOptions">*OPTIONAL* Input options to use while navigating</param>
         /// <param name="maxPresses">*OPTIONAL* Maximum number of input actions to take</param>
         /// <returns>If the cursorQuery returns the endLocation after navigating</returns>
         public bool NavigateMenu(int endLocation, int maxPresses = MAX_PRESSES)
@@ -109,12 +108,10 @@ namespace PokemonFramework.Framework.Models.Menu
         /// <summary>
         /// Navigate to the specified end location by actively querying the cursor position after each input action
         /// </summary>
-        /// <param name="cursorQuery">Query for the menu cursor that returns the current cursor position</param>
         /// <param name="endLocation">Ending location of the cursor within the menu</param>
-        /// <param name="actionOptions">*OPTIONAL* Input options to use while navigating</param>
         /// <param name="maxPresses">*OPTIONAL* Maximum number of input actions to take</param>
         /// <returns>If the cursorQuery returns the endLocation after navigating</returns>
-        public abstract bool ActiveNavigation(MemoryQuery cursorQuery, int endLocation, InputAction actionOptions, int maxPresses = MAX_PRESSES);
+        public abstract bool ActiveNavigation(int endLocation, int maxPresses = MAX_PRESSES);
 
         /// <summary>
         /// Get the position of the current cursor

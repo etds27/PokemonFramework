@@ -28,6 +28,7 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
                 return;
             }
             Serilog.Log.Information("Loaded Save State from path: {State}", statePath);
+            AdvanceFrame();
         }
 
         public override void Pause()

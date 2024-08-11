@@ -5,14 +5,13 @@ namespace PokemonFramework.Tests.Emulator
 {
     internal class EmulatorTests : TestClass
     {
-        public TestStatus TestFrameAdvance()
+        public void TestFrameAdvance()
         {
             int frameAdvance = 60;
             int startingFrames = API.Emulator.GetFrameCount();
             API.Emulator.AdvanceFrames(frames: frameAdvance);
             int frameDelta = API.Emulator.GetFrameCount() - startingFrames;
             AssertEqual(frameDelta, frameAdvance, "Expected frame advance not correct");
-            return TestStatus.Success;
         }
     }
 

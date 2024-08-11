@@ -4,6 +4,7 @@ using PokemonFramework.EmulatorBridge.EmulatorInterface;
 using PokemonFramework.EmulatorBridge.MemoryInterface;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace PokemonFramework.EmulatorBridge.InputInterface
@@ -18,26 +19,35 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
 
         public override void PerformInputAction(InputAction action)
         {
-            Dictionary<string, bool> buttonMask = [];
-            foreach (Button button in Enum.GetValues(typeof(Button))) {
-                if (action.Buttons.Any(b => b == button))
-                {
-                    buttonMask.Add(Enum.GetName(typeof(Button), button), true);
-                } else
-                {
-                    buttonMask.Add(Enum.GetName(typeof(Button), button), false);
-                }
-            }
-
-            Serilog.Log.Information("Joypad Button Mask {ButtonMask}", buttonMask);
+            SetButtons(action.Buttons);
+            Serilog.Log.Information("Joypad Button Mask {ButtonMask}", action.Buttons.ToList().Select(b => b.Name));
             for (int i = 0; i < action.Duration; i++)
             {
-                
-                API.Joypad.Set(buttons: buttonMask);
+
                 EmulatorClientInterface.AdvanceFrame();
             }
+            ClearButtons();
 
             EmulatorClientInterface.AdvanceFrames(action.WaitFrames);
         }
+
+        private void SetButtons(IReadOnlyCollection<Button> buttons)
+        {
+            foreach (Button button in Button.AllButtons)
+            {;
+                if (buttons.Any(b => b == button))
+                {
+                    // buttonMask.Add(Enum.GetName(typeof(Button), button), true);
+                    API.Joypad.Set(button.Name, true);
+                }
+                else
+                {
+                    // buttonMask.Add(, false);
+                    API.Joypad.Set(button.Name, false);
+                }
+            }
+        }
+
+        private void ClearButtons() => SetButtons(buttons: []);
     }
 }

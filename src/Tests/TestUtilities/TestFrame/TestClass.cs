@@ -17,7 +17,35 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
         internal bool ContinueAfterFailure = false;
 
 
-        internal TestStatus Assert(bool status, string message = "")
+        internal TestStatus WorstTestStatus = TestStatus.Success;
+        internal string WorstTestMessage = "";
+        internal void TestCaseSetup()
+        {
+            // Reset the previous test's worst result
+            WorstTestStatus = TestStatus.Success;
+            WorstTestMessage = "";
+        }
+
+        /// <summary>
+        /// Cleans up from the previous test execution and delivers the final test status
+        /// </summary>
+        internal TestStatus TestCaseTearDown()
+        {
+            // Reset the continue after failure
+            ContinueAfterFailure = false;
+            return WorstTestStatus;
+        }
+
+        private void UpdateWorstStatus(TestStatus status, string message)
+        {
+            if (status < WorstTestStatus)
+            {
+                WorstTestStatus = status;
+                WorstTestMessage = message;
+            }
+        }
+
+        internal void Assert(bool status, string message = "")
         {
             if (!status && !ContinueAfterFailure)
             {
@@ -25,38 +53,37 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
             }
             else if (!status && ContinueAfterFailure)
             {
-                return TestStatus.Fail;
+                UpdateWorstStatus(TestStatus.Fail, message);
             }
-            return TestStatus.Success;
         }
 
-        internal TestStatus AssertFalse(bool status, string message = "")
+        internal void AssertFalse(bool status, string message = "")
         {
-            return Assert(!status, message);
+            Assert(!status, message);
         }
 
-        internal TestStatus AssertEqual<T>(IEquatable<T> equatable1, IEquatable<T> equatable2, string message = "")
+        internal void AssertEqual<T>(IEquatable<T> equatable1, IEquatable<T> equatable2, string message = "")
         {
             string updatedMesage = $"{equatable1} != {equatable2}: {message}";
-            return Assert(equatable1.Equals(equatable2), updatedMesage);
+            Assert(equatable1.Equals(equatable2), updatedMesage);
         }
 
-        internal TestStatus AssertNonEqual<T>(IEquatable<T> equatable1, IEquatable<T> equatable2, string message = "")
+        internal void AssertNonEqual<T>(IEquatable<T> equatable1, IEquatable<T> equatable2, string message = "")
         {
             string updatedMesage = $"{equatable1} == {equatable2}: {message}";
-            return Assert(!equatable1.Equals(equatable2), updatedMesage);
+            Assert(!equatable1.Equals(equatable2), updatedMesage);
         }
 
-        internal TestStatus AssertGreaterThan(IComparable comparable1, IComparable comparable2, string message = "")
+        internal void AssertGreaterThan(IComparable comparable1, IComparable comparable2, string message = "")
         {
             string updatedMesage = $"{comparable1} <= {comparable2}: {message}";
-            return Assert(comparable1.CompareTo(comparable2) > 0, updatedMesage);
+            Assert(comparable1.CompareTo(comparable2) > 0, updatedMesage);
         }
 
-        internal TestStatus AssertLessThan(IComparable comparable1, IComparable comparable2, string message = "")
+        internal void AssertLessThan(IComparable comparable1, IComparable comparable2, string message = "")
         {
             string updatedMesage = $"{comparable1} >= {comparable2}: {message}";
-            return Assert(comparable1.CompareTo(comparable2) < 0, updatedMesage);
+            Assert(comparable1.CompareTo(comparable2) < 0, updatedMesage);
         }
     }
 }

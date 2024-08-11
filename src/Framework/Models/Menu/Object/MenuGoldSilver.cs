@@ -11,7 +11,7 @@ namespace PokemonFramework.Framework.Models.Menu.Object
     internal class MenuGoldSilver(MenuType menuType, MemoryQuery cursorQuery, bool vertical = true, bool downIsUp = true) : 
         IMenuObject(menuType, cursorQuery, vertical = true, downIsUp = true)
     {
-        public override bool ActiveNavigation(MemoryQuery cursorQuery, int endLocation, InputAction actionOptions, int maxPresses = 100)
+        public override bool ActiveNavigation(int endLocation, int maxPresses = 100)
         {
             throw new NotImplementedException();
         }

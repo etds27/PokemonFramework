@@ -8,7 +8,7 @@ namespace PokemonFramework.Framework.Models.Menu.Object
     internal class MenuCrystal(MenuType menuType, MemoryQuery cursorQuery, bool vertical = true, bool downIsUp = true) : 
         IMenuObject(menuType, cursorQuery,  vertical, downIsUp)
     {
-        public override bool ActiveNavigation(MemoryQuery cursorQuery, int endLocation, InputAction actionOptions, int maxPresses = 100)
+        public override bool ActiveNavigation(int endLocation, int maxPresses = 100)
         {
             Serilog.Log.Debug("Actively Navigating for location: {Location}", endLocation);
             for (int i = 0; i < maxPresses; i++)
