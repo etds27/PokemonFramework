@@ -1,5 +1,6 @@
 ﻿using BizHawk.Client.Common;
 using PokemonFramework.EmulatorBridge.APIContainer;
+using System;
 
 namespace PokemonFramework.EmulatorBridge.EmulatorInterface
 {
@@ -11,26 +12,31 @@ namespace PokemonFramework.EmulatorBridge.EmulatorInterface
             api.EmuClient.DoFrameAdvance();
         }
 
-        public override bool IsPaused()
-        {
-            return api.EmuClient.IsPaused();
-        }
+        public override bool IsPaused() => api.EmuClient.IsPaused();
 
         public override void LoadState(string statePath)
         {
             Serilog.Log.Information("Loading Save State from path: {State}", statePath);
-            api.EmuClient.LoadState(statePath);
+            try
+            {
+                api.EmuClient.LoadState(statePath);
+            } catch
+            {
+                Serilog.Log.Error("Unable to Load Save state");
+                return;
+            }
             Serilog.Log.Information("Loaded Save State from path: {State}", statePath);
-
         }
 
         public override void Pause()
         {
+            Serilog.Log.Information("Pausing Emulator");
             api.EmuClient.Pause();
         }
 
         public override void Resume()
         {
+            Serilog.Log.Information("Resuming Emulator");
             api.EmuClient.Unpause();
         }
 

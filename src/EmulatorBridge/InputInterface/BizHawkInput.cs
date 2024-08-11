@@ -22,16 +22,19 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
             foreach (Button button in Enum.GetValues(typeof(Button))) {
                 if (action.Buttons.Any(b => b == button))
                 {
-                    buttonMask.Add(nameof(button), true);
+                    buttonMask.Add(Enum.GetName(typeof(Button), button), true);
                 } else
                 {
-                    buttonMask.Add(nameof(button), false);
+                    buttonMask.Add(Enum.GetName(typeof(Button), button), false);
                 }
             }
 
+            Serilog.Log.Information("Joypad Button Mask {ButtonMask}", buttonMask);
             for (int i = 0; i < action.Duration; i++)
             {
+                
                 API.Joypad.Set(buttons: buttonMask);
+                EmulatorClientInterface.AdvanceFrame();
             }
 
             EmulatorClientInterface.AdvanceFrames(action.WaitFrames);

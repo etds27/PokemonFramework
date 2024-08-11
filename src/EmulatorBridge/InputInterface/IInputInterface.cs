@@ -15,9 +15,23 @@ namespace PokemonFramework.EmulatorBridge.InputInterface
             Duration = duration;
             WaitFrames = waitFrames;
         }
+
+        public InputAction(IReadOnlyList<Button> buttons, InputOptions options)
+        {
+            Buttons = buttons;
+            Duration = options.Duration;
+            WaitFrames = options.WaitFrames;
+        }
+
         public readonly IReadOnlyList<Button> Buttons;
         public readonly int Duration;
         public readonly int WaitFrames;
+    }
+
+    public readonly struct InputOptions(int duration, int waitFrames)
+    {
+        public readonly int Duration = duration;
+        public readonly int WaitFrames = waitFrames;
     }
 
     public enum Button
