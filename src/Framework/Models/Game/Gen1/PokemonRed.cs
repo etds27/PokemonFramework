@@ -2,7 +2,8 @@
 {
     internal class PokemonRed : IGame
     {
-        public override string Name => "Pokemon Crystal";
+        public override string Name => "Pokemon Red";
         public override string RomHash => "";
+        public override string ShortName => "Red";
     }
 }

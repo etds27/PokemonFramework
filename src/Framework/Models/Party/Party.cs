@@ -76,9 +76,9 @@ namespace PokemonFramework.Framework.Models.Party
         public abstract bool NavigateToPokemon(int index);
     }
 
-    public class PartyFactory : TopLevelModule<IPartyObject, object>
+    public class PartyFactory : TopLevelModule<Constructor, object>
     {
-        internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
+        internal override Dictionary<IGame, Constructor> GameConstructorMap => new()
         {
             { PokemonGame.GOLD, () => new PartyGoldSilver() },
             { PokemonGame.SILVER, () => new PartyGoldSilver() },

@@ -3,6 +3,7 @@
     public abstract class IGame
     {
         public abstract string Name { get; }
+        public abstract string ShortName { get; }
         public abstract string RomHash { get; }
     }
 }

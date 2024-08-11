@@ -88,9 +88,9 @@ namespace PokemonFramework.Framework.Models.Bag
         TMHM
     }
 
-    internal class PocketFactory : TopLevelModule<IPocketObject, object>
+    internal class PocketFactory : TopLevelModule<Constructor, object>
     {
-        internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
+        internal override Dictionary<IGame, Constructor> GameConstructorMap => new()
         {
             { PokemonGame.GOLD, (pocketType, memoryAddress, value) => new PocketGoldSilver(pocketType, memoryAddress, value) },
             { PokemonGame.SILVER, (pocketType, memoryAddress, value) => new PocketGoldSilver(pocketType, memoryAddress, value) },

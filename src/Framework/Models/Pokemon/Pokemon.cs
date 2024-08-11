@@ -40,16 +40,16 @@ namespace PokemonFramework.Framework.Models.Pokemon
         BOX
     }
 
-    public class PokemonFactory : TopLevelModule<IPokemonObject, IPokemonConfig>, IPokemonConfig
+    public class PokemonFactory : TopLevelModule<Constructor, IPokemonConfig>, IPokemonConfig
     {
-        internal new static Dictionary<IGame, IPokemonConfig> GameConfigMap = new()
+        internal new Dictionary<IGame, IPokemonConfig> GameConfigMap = new()
         {
             { PokemonGame.GOLD, new PokemonConfigGoldSilver() },
             { PokemonGame.SILVER, new PokemonConfigGoldSilver() },
             { PokemonGame.CRYSTAL, new PokemonConfigCrystal() }
         };
 
-        internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
+        internal override Dictionary<IGame, Constructor> GameConstructorMap => new()
         {
             { PokemonGame.GOLD, (address, memoryType) => new PokemonGoldSilver(address, memoryType) },
             { PokemonGame.SILVER, (address, memoryType) => new PokemonGoldSilver(address, memoryType) },
@@ -75,10 +75,10 @@ namespace PokemonFramework.Framework.Models.Pokemon
             }
         }
 
-        public int PokemonSizeInParty => StaticModelInstance.PokemonSizeInParty;
+        public int PokemonSizeInParty => ConfigInstance.PokemonSizeInParty;
 
-        public int PokemonSizeInBattle => StaticModelInstance.PokemonSizeInBattle;
+        public int PokemonSizeInBattle => ConfigInstance.PokemonSizeInBattle;
 
-        public int PokemonSizeInBox => StaticModelInstance.PokemonSizeInBox;
+        public int PokemonSizeInBox => ConfigInstance.PokemonSizeInBox;
     }
 }

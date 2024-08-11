@@ -9,13 +9,13 @@ namespace PokemonFramework.Framework.Models.Module
     /// </summary>
     public abstract class TopLevelModule<T1, T2> : FrameworkModule
     {
-        static TopLevelModule()
+        public TopLevelModule()
         {
             if ((GameConfigMap ?? []).TryGetValue(CurrentGame, out T2 tempObject))
             {
                 if (tempObject != null)
                 {
-                    StaticModelInstance = tempObject;
+                    ConfigInstance = tempObject;
                 }
                 else
                 {
@@ -24,6 +24,7 @@ namespace PokemonFramework.Framework.Models.Module
             }
             else
             {
+                Serilog.Log.Error("Unable to find config for {Game} in {GameMap}", CurrentGame.Name, GameConfigMap);
                 throw new SubModuleNotFoundException();
             }
         }
@@ -32,9 +33,9 @@ namespace PokemonFramework.Framework.Models.Module
         /// Provides the current game for all top level modules in the POM
         /// </summary>
         internal static IGame CurrentGame => PokemonGame.GetCurrentGame();
-        internal static Dictionary<IGame, T1> GameConstructorMap { get; set; }
-        internal static Dictionary<IGame, T2> GameConfigMap { get; set; }
-        internal static T2 StaticModelInstance { get; set; }
+        internal abstract Dictionary<IGame, T1> GameConstructorMap { get; }
+        internal virtual Dictionary<IGame, T2> GameConfigMap { get; }
+        internal T2 ConfigInstance { get; set; }
 
 
         /// <summary>

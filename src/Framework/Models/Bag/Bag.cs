@@ -40,6 +40,14 @@ namespace PokemonFramework.Framework.Models.Bag
 
         public abstract bool NavigateToPocket(PocketType pocket);
         
+        /// <summary>
+        /// Use the specified item.
+        /// 
+        /// This can be used as long as the bag is currently opened and the bag is able to be navigated in
+        /// </summary>
+        /// <param name="pocket">Pocket that contains the item</param>
+        /// <param name="item">Item to use</param>
+        /// <returns>If the item was found and used</returns>
         public abstract bool UseItem(PocketType pocket, Item.Item item);
         public abstract bool UseBestBall();
 
@@ -95,16 +103,16 @@ namespace PokemonFramework.Framework.Models.Bag
 
     }
 
-    public class BagFactory : TopLevelModule<IBagObject, IBagConfig>, IBagConfig
+    public class BagFactory : TopLevelModule<Constructor, IBagConfig>, IBagConfig
     {
-        internal new static Dictionary<IGame, IBagConfig> GameConfigMap = new()
+        internal new Dictionary<IGame, IBagConfig> GameConfigMap = new()
         {
             { PokemonGame.GOLD, new BagConfigGoldSilver() },
             { PokemonGame.SILVER, new BagConfigGoldSilver() },
             { PokemonGame.CRYSTAL, new BagConfigCrystal() }
         };
 
-        internal new static Dictionary<IGame, Constructor> GameConstructorMap = new()
+        internal override Dictionary<IGame, Constructor> GameConstructorMap => new()
         {
             { PokemonGame.GOLD, () => new BagGoldSilver() },
             { PokemonGame.SILVER, () => new BagGoldSilver() },
