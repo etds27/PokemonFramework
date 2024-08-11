@@ -4,6 +4,7 @@ using PokemonFramework.Tests.TestUtilities.TestFrame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +12,8 @@ using System.Windows.Forms;
 
 namespace PokemonFramework.Tests.Party
 {
-    public class PartyTestFrame : TestFrame
+    internal class PartyTests : TestClass
     {
-        internal new String _testSuite = "Party";
-
         public TestStatus TestCheckPartySize()
         {
             API.Emulator.LoadState(TestStateManager.TestCheckPartySize);
@@ -29,5 +28,14 @@ namespace PokemonFramework.Tests.Party
         {
             return TestCheckPartySize();
         }
+    }
+
+    public class PartyTestFrame : TestFrame
+    {
+        public PartyTestFrame() : base() {
+            TestSuite = "Party";
+        }
+
+        internal override TestClass TestClass => new PartyTests();
     }
 }

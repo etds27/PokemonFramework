@@ -4,6 +4,7 @@
     {
         Success,
         None,
+        Abort,
         Fail,
         ExpectedFailure,
         KnownFailure

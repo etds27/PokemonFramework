@@ -1,18 +1,14 @@
 ﻿
 using BizHawk.Client.Common;
 using BizHawk.Client.EmuHawk;
-using BizHawk.Common;
-using BizHawk.Common.IOExtensions;
 using PokemonFramework.EmulatorBridge;
 using PokemonFramework.EmulatorBridge.APIContainer;
-using PokemonFramework.Forms;
+using PokemonFramework.Tests;
+using PokemonFramework.Tests.Menu;
 using PokemonFramework.Tests.Party;
+using PokemonFramework.Tests.TestUtilities.TestFrame;
 using Serilog;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Windows.Forms;
 
 
@@ -26,23 +22,22 @@ namespace PokemonFramework
         private ApiContainer APIContainer => _maybeAPIContainer!;
 
         protected override string WindowTitleStatic => "Pokemon Framework Runner";
-        private Label _headerLabel = new() { AutoSize = true };
+
         public PokemonFramework()
         {
-            Serilog.Log.Logger = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File("logs\\log.txt")
                 .CreateLogger();
 
-            Serilog.Log.Information("Initializing PokemonFramework");
+            Log.Information("Initializing PokemonFramework");
 
             ClientSize = new System.Drawing.Size(400, 400);
-            _headerLabel.Text = "Pokemon Framework";
-            Controls.Add(_headerLabel);
-            Controls.Add(new PartyTestFrame());
+            MainTestControl mainTestControl = new MainTestControl();
+            mainTestControl.Dock = DockStyle.Fill;
+            Controls.Add(mainTestControl);
 
-            IEmulatorInterface emulatorInterface = EmulatorFactory.GetEmulator();
         }
 
         public override void Restart()

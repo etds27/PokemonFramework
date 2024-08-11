@@ -1,26 +1,20 @@
-﻿using BizHawk.Client.EmuHawk;
-using PokemonFramework.EmulatorBridge;
+﻿using PokemonFramework.EmulatorBridge;
 using PokemonFramework.Tests.TestUtilities.Models;
-using PokemonFramework.Tests.TestUtilities.SaveStates;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PokemonFramework.Tests.TestUtilities.TestFrame
 {
-    public class TestFrame : UserControl
+    public abstract class TestFrame : UserControl
     {
         internal IEmulatorInterface API = new BizHawkEmulatorBridge();
         private Label testSuiteNameLabel;
         private FlowLayoutPanel testSuiteLayoutPanel;
-        internal String _testSuite = "TEST SUITE";
-        public String TestSuite
+        internal string _testSuite = "TEST SUITE";
+        internal abstract TestClass TestClass { get; }
+
+        public string TestSuite
         {
 
             get { return _testSuite; }
@@ -81,7 +75,7 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
 
         private void LoadTests()
         {
-            MethodInfo[] classMethods = this.GetType().GetMethods();
+            MethodInfo[] classMethods = this.TestClass.GetType().GetMethods();
             foreach (MethodInfo method in classMethods)
             {
                 if (method.Name.StartsWith("Test") && method.GetParameters().Length == 0)
@@ -91,7 +85,7 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
                         testName = method.Name,
                         testStatus = TestStatus.None
                     };
-                    Func<TestStatus> testFunc = (Func<TestStatus>) Delegate.CreateDelegate(typeof(Func<TestStatus>), this, method);
+                    Func<TestStatus> testFunc = (Func<TestStatus>) Delegate.CreateDelegate(typeof(Func<TestStatus>), TestClass, method);
                     testView.TestCallback = testFunc;
                     testSuiteLayoutPanel.Controls.Add(testView);
                 }

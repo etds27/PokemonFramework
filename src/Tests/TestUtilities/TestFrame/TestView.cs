@@ -54,6 +54,9 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
                     case TestStatus.ExpectedFailure:
                         testStatusLabel.BackColor = Color.LightBlue;
                         break;
+                    case TestStatus.Abort:
+                        testStatusLabel.BackColor = Color.Orange;
+                        break;
                 }
             }
         }
@@ -128,7 +131,23 @@ namespace PokemonFramework.Tests.TestUtilities.TestFrame
         private void RunTest()
         {
             runTestButton.Text = "Running...";
-            TestStatus executionStatus = TestCallback();
+            TestStatus executionStatus;
+            try
+            {
+                executionStatus = TestCallback();
+            }
+            catch (TestInterruption e)
+            {
+                Serilog.Log.Warning("Encountered Test Interruption\n{e}", e);
+                executionStatus = e.TestStatus;
+                MessageBox.Show(e.ErrorString);
+            }
+            catch (Exception e)
+            {
+                Serilog.Log.Warning("Encountered Unclass Exception\n{e}", e);
+                executionStatus = TestStatus.Abort;
+                MessageBox.Show(e.Message);
+            }
             runTestButton.Text = "Go";
             testStatus = executionStatus;
         }
