@@ -6,6 +6,7 @@ using PokemonFramework.Framework.Models.Menu.Object;
 using PokemonFramework.Framework.Models.Module;
 using PokemonFramework.Framework.Models.Pokemon;
 using PokemonFramework.Framework.Models.Pokemon.PokemonConfig;
+using PokemonFramework.Framework.Utility.Coordinate;
 using System;
 using System.Collections.Generic;
 
@@ -161,6 +162,21 @@ namespace PokemonFramework.Framework.Models.Menu
         }
     }
 
+    public class Menu2D(MemoryQuery queryX, MemoryQuery queryY) : FrameworkModule
+    {
+        private static readonly MenuFactory menuFactory = new MenuFactory();
+
+        public IMenuObject MenuX = menuFactory.CreateObject(MenuType.Single, cursorQuery: queryX, vertical: false);
+        public IMenuObject MenuY = menuFactory.CreateObject(MenuType.Single, cursorQuery: queryY, vertical: true);
+
+        public bool NavigateMenu(Coordinate coordinate)
+        {
+            return MenuX.NavigateMenu(coordinate.X) && MenuY.NavigateMenu(coordinate.Y);
+        }
+
+        public Coordinate GetCursorPosition() => new(x: MenuX.GetCursorPosition(), y: MenuY.GetCursorPosition());
+    }
+ 
     public class MenuFactory : TopLevelModule<Constructor, IMenuConfig>, IMenuConfig
     {
         internal override Dictionary<IGame, Constructor> GameConstructorMap => new() {
@@ -210,6 +226,11 @@ namespace PokemonFramework.Framework.Models.Menu
 
         public IMenuObject CreateObject(MenuType menuType, MemoryQuery cursorQuery, bool vertical = true, bool downIsUp = true)
         {
+            if (menuType == MenuType.Multi)
+            {
+
+            }
+
             if ((GameConstructorMap ?? []).TryGetValue(CurrentGame, out Constructor tempObject))
             {
                 if (tempObject != null)

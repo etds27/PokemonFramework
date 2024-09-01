@@ -7,6 +7,8 @@ namespace PokemonFramework.Framework.Models.Module
     /// <summary>
     /// Abstract class to hold necessary attributes for each class within the framework
     /// </summary>
+    /// <typeparam name="T1">Constructor for the object</typeparam>
+    /// <typeparam name="T2">Generic config class</typeparam>
     public abstract class TopLevelModule<T1, T2> : FrameworkModule
     {
         public TopLevelModule()
