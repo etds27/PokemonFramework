@@ -1,4 +1,5 @@
-﻿using PokemonFramework.Tests.Emulator;
+﻿using PokemonFramework.Tests.Clock;
+using PokemonFramework.Tests.Emulator;
 using PokemonFramework.Tests.Menu;
 using PokemonFramework.Tests.Party;
 using PokemonFramework.Tests.TestUtilities.TestFrame;
@@ -16,10 +17,11 @@ namespace PokemonFramework.Tests
 
         private TabControl TestTabControl = new();
 
-        private IReadOnlyList<TestFrame> TestFrames = [
+        private readonly IReadOnlyList<TestFrame> TestFrames = [
             new PartyTestFrame(),
             new MenuTestFrame(),
             new EmulatorTestFrame(),
+            new ClockTestFrame(),
         ];
 
         public MainTestControl() {

@@ -30,6 +30,7 @@ namespace PokemonFramework.Framework.Models.Box
             /// Number of bytes that make up the size of the box header
             /// </summary>
             internal abstract int BoxHeaderSize { get; }
+
             /// <summary>
             /// Memory domain for box queries
             /// </summary>
@@ -123,12 +124,20 @@ namespace PokemonFramework.Framework.Models.Box
                 throw new BoxException($"Unable to find a box with at least {capacity} open slot(s)");
             }
 
-
+            /// <summary>
+            /// Get the starting address of a pokemon in a specified box and position
+            /// </summary>
+            /// <param name="boxNumber">Box number</param>
+            /// <param name="position">Position within the box</param>
+            /// <returns>Starting address of the pokemon</returns>
             internal MemoryAddress BoxAddressAtPosition(int boxNumber, int position)
             {
                 return BoxStartingAddress(boxNumber) + BoxHeaderSize + PokemonFactory.PokemonSizeInBox * (position - 1);
             }
 
+            // TODO: Implement navigating within the box
+            // TODO: Implement or move `PerformDepositMenuActions
+            // TODO: Implement BoxUI methods
         }
 
         public interface IBoxConfig
@@ -137,21 +146,26 @@ namespace PokemonFramework.Framework.Models.Box
             /// Total number of boxes in the PC
             /// </summary>
             public int TotalNumberOfBoxes { get; }
+
             /// <summary>
             /// Maximum number of Pokemon slots in a single PC box
             /// </summary>
             public int MaximumPokemonPerBox { get; }
-
         }
 
         public class BoxFactory : TopLevelModule<ConstructorBuilder, IBoxConfig>, IBoxConfig
         {
             internal override Dictionary<IGame, ConstructorBuilder> GameConstructorMap => throw new NotImplementedException();
 
+            /// <summary>
+            /// Total number of boxes in the PC
+            /// </summary>
             public int TotalNumberOfBoxes => ConfigInstance.TotalNumberOfBoxes;
 
+            /// <summary>
+            /// Maximum number of Pokemon slots in a single PC box
+            /// </summary>
             public int MaximumPokemonPerBox => ConfigInstance.MaximumPokemonPerBox;
         }
     }
-
 }

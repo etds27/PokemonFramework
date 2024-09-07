@@ -76,12 +76,40 @@ namespace PokemonFramework.EmulatorBridge.MemoryInterface
         /// <summary>
         /// 
         /// Reads data from the emulators memory
-        /// <param name="query">Struct containing information required to read memory data</param>
-        /// <returns>Integer from the emulator</returns>
+		/// <param name="address">Address of the data to read relative to the memory domain</param>
+		/// <param name="domain">Region of memory to look in for datas</param>
+		/// <returns>Integer from the emulator</returns>
         public int ReadInt(MemoryAddress address, MemoryDomain domain)
         {
             return ReadInt(new MemoryQuery(address: address, size: 1, domain));
         }
+
+        /// <summary>
+        /// Reads a boolean from memory
+        /// 
+        /// A bool is true if the memory query returns a non zero int
+        /// </summary>
+        /// <param name="query">Struct containing information required to read memory data</param>
+        /// <returns>Bool from memory</returns>
+        public bool ReadBool(MemoryQuery query)
+		{
+			return ReadInt(query) > 0;
+		}
+
+        /// <summary>
+        /// Reads a boolean from memory
+        /// 
+        /// A bool is true if the memory query returns a non zero int
+		/// </summary>
+		/// <param name="address">Address of the data to read relative to the memory domain</param>
+		/// <param name="domain">Region of memory to look in for datas</param>
+        /// <returns>Bool from memory</returns>
+		public bool ReadBool(MemoryAddress address, MemoryDomain domain)
+		{
+			return ReadBool(new(address: address, size: 1, domain: domain));
+		}
+
+
 
         public abstract void Write(MemoryAddress address, IReadOnlyList<byte> data, MemoryDomain domain);
 		public void WriteByte(long address, byte value, MemoryDomain domain)
